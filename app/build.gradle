@@ -23,6 +23,10 @@ android {
         }
     }
 
+    buildTypes.each {
+        it.buildConfigField 'String', 'tmdbapikey', tmdbapikey
+    }
+
 }
 
 dependencies {

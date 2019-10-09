@@ -1,12 +1,14 @@
 package com.billyhsieh.moviediscovery.movies.data.source.network
 
 import com.billyhsieh.moviediscovery.movies.data.source.database.Movie
+import com.billyhsieh.moviediscovery.movies.data.source.database.MovieDetail
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
-
-
-/** {
+/**
+ *  Movie discovery reponse json format.
+ *
+ *  {
  *   "results": []
  *  }
  */
@@ -24,7 +26,6 @@ data class NetworkMovie (
 )
 
 
-// TODO: detail
 data class MovieDetailResponse(
     @Json(name = "original_title")
     val title: String,
@@ -39,14 +40,13 @@ data class MovieDetailResponse(
     val voteCount: String,
     @Json(name = "release_date")
     val releaseDate: String,
-    val runtime: String
-    )
+    val runtime: String?)
 
 data class Genre(
     val id: Int,
     val name: String)
 
-fun MoviesDiscoverResponse.asDatabaseModel(): Array<Movie> {
+fun MoviesDiscoverResponse.asModel(): Array<Movie> {
     return results.map {
         Movie(
             id = it.id,
@@ -56,4 +56,20 @@ fun MoviesDiscoverResponse.asDatabaseModel(): Array<Movie> {
             posterPath = it.posterPath
         )
     }.toTypedArray()
+}
+
+fun MovieDetailResponse.asDetailModel(): MovieDetail {
+    return let {
+        MovieDetail(
+            title = it.title,
+            overview = it.overview,
+            popularity = it.popularity,
+            posterPath = it.posterPath,
+            genres = it.genres,
+            voteAverage = it.voteAverage,
+            voteCount = it.voteCount,
+            releaseDate = it.releaseDate,
+            runtime = it?.runtime
+        )
+    }
 }

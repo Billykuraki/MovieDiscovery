@@ -3,9 +3,8 @@ package com.billyhsieh.moviediscovery.movies.data.source.database
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.billyhsieh.moviediscovery.movies.data.source.network.Genre
 
-
-private const val IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500"
 
 @Entity(tableName = "movies")
 data class Movie(
@@ -17,14 +16,18 @@ data class Movie(
     val releaseDate: String,
     @ColumnInfo(name = "poster_path")
     val posterPath: String?
-) {
+)
 
-    fun getPosterUrl(): String? {
-        return if (posterPath.isNullOrEmpty()) {
-            null
-        } else {
-            "$IMAGE_BASE_URL/${posterPath}"
-        }
-    }
-}
+data class MovieDetail(
+    val title: String,
+    val overview: String,
+    val popularity: String,
+    val posterPath: String?,
+    val genres: List<Genre?>,
+    val voteAverage: String,
+    val voteCount: String,
+    val releaseDate: String,
+    val runtime: String?
+)
+
 

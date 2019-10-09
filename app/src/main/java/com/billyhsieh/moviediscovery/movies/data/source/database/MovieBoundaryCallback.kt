@@ -22,6 +22,7 @@ class MovieBoundaryCallback(
     val networkState = helper.createStatusLiveData()
     val ioExecutor = Executors.newCachedThreadPool()
 
+    // TODO: find better solution store page index.
     var INIT_PAGE = 1
 
     /**
@@ -42,7 +43,7 @@ class MovieBoundaryCallback(
         helper.runIfNotRunning(PagingRequestHelper.RequestType.AFTER) {
             val option = getDefaultQueryOptions()
             option["page"] = INIT_PAGE.toString()
-            Timber.d(INIT_PAGE.toString())
+            Timber.d("current page index${INIT_PAGE}")
             TmdbApi.TMDB.getMovies(option)
                 .enqueue(createWebserviceCallback(it))
         }

@@ -32,7 +32,7 @@ class MovieFragment: Fragment(), MovieClickListener {
         super.onViewCreated(view, savedInstanceState)
         initAdapter()
         initSwipeToRefresh()
-        model.load(true)
+        model.load("")
         setHasOptionsMenu(true)
     }
 

@@ -4,37 +4,54 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
     <ImageView
         android:id="@+id/poster"
-        android:layout_width="50dp"
-        android:layout_height="50dp"/>
+        android:layout_width="@dimen/detail_poster_width_height"
+        android:layout_height="150dp"/>
 
     <TextView
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textStyle="bold"
-        android:textSize="20dp" />
+        android:textSize="@dimen/detail_title_text_size"
+        android:paddingBottom="@dimen/list_item_padding"/>
+
+    <TextView
+        android:id="@+id/genre"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/list_item_padding"/>
 
     <TextView
         android:id="@+id/overview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textStyle="bold"
-        android:text=""/>
+        android:paddingBottom="@dimen/list_item_padding"/>
 
     <TextView
         android:id="@+id/release_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textStyle="bold"
-        android:text=""/>
+        android:paddingBottom="@dimen/list_item_padding"/>
 
     <TextView
-        android:id="@+id/genre"
+        android:id="@+id/runtime"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/list_item_padding"/>
+
+    <TextView
+        android:id="@+id/voteAverage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/list_item_padding"/>
+
+    <TextView
+        android:id="@+id/voteCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/list_item_padding"/>
 
 
 </LinearLayout>

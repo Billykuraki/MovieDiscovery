@@ -12,6 +12,9 @@ interface MovieDao {
     @Query("SELECT * FROM movies ORDER BY release_date DESC")
     fun getMovies(): DataSource.Factory<Int, Movie>
 
+    @Query("SELECT * FROM movies WHERE title LIKE :search")
+    fun getFilterMovies(search: String): DataSource.Factory<Int, Movie>
+
     @Query("SELECT * FROM movies WHERE id = :movieId")
     fun getMovieById(movieId: String): Movie?
 

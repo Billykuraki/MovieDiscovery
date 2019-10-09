@@ -14,8 +14,8 @@ import com.billyhsieh.moviediscovery.R
 import com.billyhsieh.moviediscovery.movies.data.source.database.Movie
 import com.billyhsieh.moviediscovery.movies.data.source.network.NetworkState
 import com.billyhsieh.moviediscovery.movies.data.source.network.Status
+import com.billyhsieh.moviediscovery.movies.utils.getPosterUrl
 import com.billyhsieh.moviediscovery.movies.utils.loadImage
-
 
 
 class MoviesAdapter(
@@ -87,8 +87,7 @@ class MoviesAdapter(
         private val poster: ImageView = view.findViewById(R.id.image_poster)
 
         fun bind(movie: Movie?) {
-            val posterUrl = movie?.getPosterUrl()
-            loadImage(poster, posterUrl)
+            loadImage(poster, getPosterUrl(movie?.posterPath))
             title.text = movie?.title
             overview.text = movie?.overview
             view.setOnClickListener {

@@ -2,9 +2,11 @@ package com.billyhsieh.moviediscovery.movies.utils
 
 import android.os.Build
 import androidx.annotation.RequiresApi
+import com.billyhsieh.moviediscovery.BuildConfig
 import java.time.LocalDate
 
-private const val API_KEY = "64b6f3a69e5717b13ed8a56fe4417e71"
+// TODO Move out key
+private const val API_KEY = BuildConfig.tmdbapikey
 
 const val TMDB_DICOVERY_PAGE_SIZE = 20
 

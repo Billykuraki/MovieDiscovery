@@ -6,4 +6,10 @@
         android:icon="@drawable/ic_calendar_today"
         android:title="date"
         app:showAsAction="ifRoom" />
+
+    <item android:id="@+id/search"
+        android:title="search"
+        android:icon="@android:drawable/ic_menu_search"
+        app:showAsAction="ifRoom"
+        app:actionViewClass="android.widget.SearchView" />
 </menu>

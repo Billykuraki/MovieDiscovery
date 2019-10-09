@@ -10,7 +10,7 @@ import com.billyhsieh.moviediscovery.movies.data.source.MoviesRepository
 class MoviesViewModel(
     private val repository: MoviesRepository
 ) : ViewModel() {
-    private val liveData = MutableLiveData<Boolean>()
+    private val liveData = MutableLiveData<String>()
     private val repoResult = map(liveData) {
         repository.getMovies()
     }
@@ -28,8 +28,9 @@ class MoviesViewModel(
         listing?.retry?.invoke()
     }
 
-    fun load(load: Boolean) {
-        liveData.value = load
+    // TODO add search text function?
+    fun load(search: String) {
+        liveData.value = search
     }
 
 }
