@@ -2,9 +2,12 @@
 
 ### Feature
 - MVVM Architecture
-- Fetch data from TMDb API using retrofit
-- Load data from tmdb using paging library with boundary callback
+- Using retrofit to fetch movie data(default three months) 
+- store movie data in room and using paging library to load more movie
 - [apk download](https://drive.google.com/open?id=1OlUrBGHi1PjUyov1xUQFOv-OqzOEd2kn)
 
 ### TODO
-- testing and more freature. picker, search view filter, review, logging etc.
+- testing
+- picker choose date range
+- search view filter reuslt
+- review, faverite etc.
