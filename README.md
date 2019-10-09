@@ -9,5 +9,5 @@
 ### TODO
 - testing
 - picker choose date range
-- search view filter reuslt
+- search view filter result
 - review, faverite etc.
