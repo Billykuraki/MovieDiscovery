@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/movie">
+
+    <fragment
+        android:id="@+id/movie"
+        android:name="com.billyhsieh.moviediscovery.movies.movies.MovieFragment"
+        android:label="fragment_dev_byte"
+        tools:layout="@layout/fragment_movie" >
+        <action
+            android:id="@+id/action_movie_to_detailFragment"
+            app:destination="@id/detailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailFragment"
+        android:name="com.billyhsieh.moviediscovery.movies.detail.MovieDetailFragment"
+        android:label="DetailFragment" >
+        <argument
+            android:name="movieId"
+            app:argType="integer" />
+    </fragment>
+</navigation>
