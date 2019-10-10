@@ -18,6 +18,9 @@ interface MovieDao {
     @Query("SELECT * FROM movies WHERE id = :movieId")
     fun getMovieById(movieId: String): Movie?
 
+    @Query("DELETE FROM movies")
+    fun deleteAllMovies()
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(vararg movie: Movie)
 

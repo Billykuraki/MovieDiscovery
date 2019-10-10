@@ -10,7 +10,7 @@ class MovieApplication : Application() {
 
     val movieRepository: MoviesRepository
         get() = MoviesRepository(
-            MovieDatabase.getDatabase(this).movieDao(),
+            MovieDatabase.getDatabase(this),
             TmdbApi.TMDB
         )
 

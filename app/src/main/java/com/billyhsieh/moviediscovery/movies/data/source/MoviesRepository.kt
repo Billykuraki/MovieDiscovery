@@ -5,10 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.paging.Config
 import androidx.paging.LivePagedListBuilder
-import com.billyhsieh.moviediscovery.movies.data.source.database.Movie
-import com.billyhsieh.moviediscovery.movies.data.source.database.MovieBoundaryCallback
-import com.billyhsieh.moviediscovery.movies.data.source.database.MovieDao
-import com.billyhsieh.moviediscovery.movies.data.source.database.MovieDetail
+import com.billyhsieh.moviediscovery.movies.data.source.database.*
 import com.billyhsieh.moviediscovery.movies.data.source.network.*
 import com.billyhsieh.moviediscovery.movies.utils.TMDB_DICOVERY_PAGE_SIZE
 import com.billyhsieh.moviediscovery.movies.utils.getDefaultQueryOptions
@@ -21,7 +18,7 @@ import java.util.concurrent.Executors
 
 
 class MoviesRepository(
-    private val movieDao: MovieDao,
+    private val db: MovieDatabase,
     private val network: TmdbService
 ) {
 
@@ -46,7 +43,10 @@ class MoviesRepository(
                 if (response.isSuccessful) {
                     Timber.d("response size${response.body()?.results.orEmpty().size}")
                     diskIO.execute {
-                        movieDao.insert(*response.body()?.asModel().orEmpty())
+                        db.runInTransaction {
+                            db.movieDao().deleteAllMovies()
+                            db.movieDao().insert(*response.body()?.asModel().orEmpty())
+                        }
                         networkState.postValue(NetworkState.LOADED)
                     }
                 }
@@ -65,7 +65,7 @@ class MoviesRepository(
             refresh()
         }
 
-        val listPage = LivePagedListBuilder(movieDao.getMovies(),
+        val listPage = LivePagedListBuilder(db.movieDao().getMovies(),
             Config(pageSize = TMDB_DICOVERY_PAGE_SIZE, prefetchDistance = 0)
         ).setBoundaryCallback(boundaryCallback)
             .build()
@@ -101,7 +101,7 @@ class MoviesRepository(
 
     private fun insertResultIntoDb(result: Response<MoviesDiscoverResponse>) {
         Timber.d("response size${result.body()?.results.orEmpty().size}")
-        movieDao.insert(*result.body()?.asModel().orEmpty())
+        db.movieDao().insert(*result.body()?.asModel().orEmpty())
     }
 
 }
