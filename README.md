@@ -10,4 +10,8 @@
 - testing
 - picker choose date range
 - search view filter result
-- review, faverite etc.
+- review, favorite etc.
+- store api key in
+
+### Note
+- - Api key store in gradle.properties
