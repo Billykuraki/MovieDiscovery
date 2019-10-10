@@ -12,7 +12,7 @@ class MoviesViewModel(
 ) : ViewModel() {
     private val liveData = MutableLiveData<String>()
     private val repoResult = map(liveData) {
-        repository.getMovies()
+        if (it.isNullOrEmpty()) repository.getMovies() else repository.getFiltedMovie(it)
     }
     val movies = switchMap(repoResult) { it.pagedList }
     val networkState = switchMap(repoResult) { it.networkState }

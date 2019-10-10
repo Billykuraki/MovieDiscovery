@@ -5,7 +5,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.paging.Config
 import androidx.paging.LivePagedListBuilder
-import com.billyhsieh.moviediscovery.movies.data.source.database.*
+import androidx.paging.toLiveData
+import com.billyhsieh.moviediscovery.movies.data.source.database.Movie
+import com.billyhsieh.moviediscovery.movies.data.source.database.MovieBoundaryCallback
+import com.billyhsieh.moviediscovery.movies.data.source.database.MovieDatabase
+import com.billyhsieh.moviediscovery.movies.data.source.database.MovieDetail
 import com.billyhsieh.moviediscovery.movies.data.source.network.*
 import com.billyhsieh.moviediscovery.movies.utils.TMDB_DICOVERY_PAGE_SIZE
 import com.billyhsieh.moviediscovery.movies.utils.getDefaultQueryOptions
@@ -80,6 +84,19 @@ class MoviesRepository(
                 refreshTrigger.value = null
             },
             refreshState = refreshState
+        )
+    }
+
+    fun getFiltedMovie(text: String) :Listing<Movie> {
+        val listPage = db.movieDao().getFilterMovies(text.let {
+            "%${it}%"
+        }).toLiveData(20, 0)
+        return Listing(
+            pagedList = listPage,
+            networkState = null,
+            retry = null,
+            refresh = null,
+            refreshState = null
         )
     }
 

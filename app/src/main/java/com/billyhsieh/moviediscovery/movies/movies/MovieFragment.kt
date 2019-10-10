@@ -2,6 +2,7 @@ package com.billyhsieh.moviediscovery.movies.movies
 
 import android.os.Bundle
 import android.view.*
+import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -34,6 +35,7 @@ class MovieFragment: Fragment(), MovieClickListener {
         initSwipeToRefresh()
         model.load("")
         setHasOptionsMenu(true)
+
     }
 
     private fun initAdapter() {
@@ -47,7 +49,6 @@ class MovieFragment: Fragment(), MovieClickListener {
         model.networkState.observe(this, Observer {
             adapter.setNetworkState(it)
         })
-
     }
 
     private fun initSwipeToRefresh() {
@@ -71,6 +72,21 @@ class MovieFragment: Fragment(), MovieClickListener {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.movie_menu, menu)
+        initSearchView(menu)
+    }
+
+    private fun initSearchView(menu: Menu) {
+        val search = menu.findItem(R.id.search).actionView as SearchView
+        search.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(p0: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(p0: String?): Boolean {
+                model.load(p0.orEmpty())
+                return true
+            }
+        })
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

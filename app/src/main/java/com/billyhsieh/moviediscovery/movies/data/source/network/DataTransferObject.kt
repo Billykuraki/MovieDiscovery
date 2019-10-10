@@ -69,7 +69,7 @@ fun MovieDetailResponse.asDetailModel(): MovieDetail {
             voteAverage = it.voteAverage,
             voteCount = it.voteCount,
             releaseDate = it.releaseDate,
-            runtime = it?.runtime
+            runtime = it.runtime
         )
     }
 }
