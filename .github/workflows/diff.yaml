@@ -9,10 +9,43 @@ jobs:
         with:
           ref: master
       - name: Build Master APK
-        run: ./gradlew assembleDebug && mv app/build/outputs/apk/debug/app-debug.apk build/app-master.apk
-      # Checkout PR branch and build the APK
+        run: ./gradlew assembleDebug && mv app/build/outputs/apk/debug/app-debug.apk app/build/outputs/apk/debug/app-master.apk
+      - name: Upload APK
+        uses: actions/upload-artifact@v1
+        with:
+          name: apk
+          path: app/build/outputs/apk/debug/app-master.apk
+
+  # Checkout PR branch and build the APK
+  build-pr:
+    runs-on: ubuntu-latest
+    steps:
       - uses: actions/checkout@v1
       - name: Build PR APK
-        run: ./gradlew assembleDebug && mv app/build/outputs/apk/debug/app-debug.apk build/app-pr.apk
-      - name: Execute Diffuse
-        run: ./diffuse diff build/app-master.apk build/app-pr.apk
+        run: ./gradlew assembleDebug && mv app/build/outputs/apk/debug/app-debug.apk app/build/outputs/apk/debug/app-pr.apk
+      - name: Upload APK
+        uses: actions/upload-artifact@v1
+        with:
+          name: apk
+          path: app/build/outputs/apk/debug/app-pr.apk
+  # Execute Diffuse only when the two APKs are built successfully
+  diffuse:
+    needs: [build-master, build-pr]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Download APKs
+        uses: actions/download-artifact@v1
+        with:
+          name: apk
+      - uses: microsoft/android-app-size-diff@v0.27
+        name: Run APK size comparision
+        with:
+          baseAppPath: apk/app-master.apk
+          targetAppPath: apk/app-pr.apk
+          summaryOutputPath: summary.md
+      - name: Upload summary
+        uses: actions/upload-artifact@v1
+        with:
+          name: summary
+          path: summary.md
