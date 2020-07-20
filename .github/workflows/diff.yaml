@@ -9,10 +9,10 @@ jobs:
         with:
           ref: master
       - name: Build Master APK
-        run: ./gradlew assembleDebug && mv app/build/outputs/apk/debug/app-debug.apk app/build/outputs/apk/debug/app-master.apk
+        run: ./gradlew assembleDebug && mv app/build/outputs/apk/debug/app-debug.apk build/app-master.apk
       # Checkout PR branch and build the APK
       - uses: actions/checkout@v1
       - name: Build PR APK
-        run: ./gradlew assembleDebug && mv app/build/outputs/apk/debug/app-debug.apk app/build/outputs/apk/debug/app-pr.apk
+        run: ./gradlew assembleDebug && mv app/build/outputs/apk/debug/app-debug.apk build/app-pr.apk
       - name: Execute Diffuse
-        run: ./diffuse diff app/build/outputs/apk/debug/app-master.apk app/build/outputs/apk/debug/app-pr.apk
+        run: ./diffuse diff build/app-master.apk build/app-pr.apk
