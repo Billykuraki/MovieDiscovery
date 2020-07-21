@@ -19,6 +19,19 @@ jobs:
       - name: Build PR APK
         run: ./gradlew assembleDebug && mv app/build/outputs/apk/debug/app-debug.apk app/build/outputs/apk/debug/app-pr.apk
 
+      - name: Upload APK
+        uses: actions/upload-artifact@v2
+        with:
+          name: apk
+          path: |
+            app/build/outputs/apk/debug/app-master.apk
+            app/build/outputs/apk/debug/app-pr.apk
+
+      - name: Download APKs
+        uses: actions/download-artifact@v2
+        with:
+          name: apk
+          path: apk
       - name: Execute Diffuse
         run: ./diffuse diff apk/app-master.apk apk/app-pr.apk > diff_summary.txt
       - name: Upload summary
