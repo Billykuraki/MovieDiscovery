@@ -33,12 +33,8 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: apk
-      - uses: microsoft/android-app-size-diff@v0.27
-        name: Run APK size comparision
-        with:
-          baseAppPath: apk/app-master.apk
-          targetAppPath: apk/app-pr.apk
-          summaryOutputPath: summary.md
+      - name: Execute Diffuse
+        run: ./diffuse diff apk/app-master.apk apk/app-pr.apk > diff_summary.txt
       - name: Upload summary
         uses: actions/upload-artifact@v2
         with:
