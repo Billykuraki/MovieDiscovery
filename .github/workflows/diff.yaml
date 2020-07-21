@@ -12,27 +12,28 @@ jobs:
         with:
           ref: master
 
-      - run: mkdir -p apks
-
       - name: Build Master APK
-        run: ./gradlew assembleDebug && mv app/build/outputs/apk/debug/app-debug.apk apks/app-master.apk
+        run: ./gradlew assembleDebug && mv app/build/outputs/apk/debug/app-debug.apk app/build/outputs/apk/debug/app-master.apk
         
       - name: Upload APK
         uses: actions/upload-artifact@v2
         with:
           name: apks
-          path: apks
+          path: app/build/outputs/apk/debug/app-master.apk
 
       - name: Checkout
         uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+
       - name: Build PR APK
-        run: ./gradlew assembleDebug && mv app/build/outputs/apk/debug/app-debug.apk apks/app-pr.apk
+        run: ./gradlew assembleDebug && mv app/build/outputs/apk/debug/app-debug.apk app/build/outputs/apk/debug/app-pr.apk
 
       - name: Upload APK
         uses: actions/upload-artifact@v2
         with:
           name: apks
-          path: apks
+          path: app/build/outputs/apk/debug/app-pr.apk
 
       - name: Download APKs
         uses: actions/download-artifact@v2
