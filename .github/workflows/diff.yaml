@@ -16,14 +16,29 @@ jobs:
 
       - name: Build Master APK
         run: ./gradlew assembleDebug && mv app/build/outputs/apk/debug/app-debug.apk apks/app-master.apk
+        
+      - name: Upload APK
+        uses: actions/upload-artifact@v2
+        with:
+          name: apks
+          path: apks
 
       - name: Checkout
         uses: actions/checkout@v2
-        with:
-          ref: ${{ github.event.pull_request.head.sha }}
-
       - name: Build PR APK
         run: ./gradlew assembleDebug && mv app/build/outputs/apk/debug/app-debug.apk apks/app-pr.apk
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v2
+        with:
+          name: apks
+          path: apks
+
+      - name: Download APKs
+        uses: actions/download-artifact@v2
+        with:
+          name: apks
+          path: apks
 
       - name: Execute Diffuse
         run: ./diffuse diff apks/app-master.apk apks/app-pr.apk > diff_summary.txt
