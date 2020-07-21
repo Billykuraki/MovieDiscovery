@@ -1,12 +1,14 @@
 name: Apk Diff
+
 on: [pull_request]
+
 jobs:
   # Checkout master branch and build the APK
   build-master:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-      - uses: actions/checkout@v2
+        uses: actions/checkout@v2
         with:
           ref: master
       - name: Build Master APK
@@ -18,7 +20,7 @@ jobs:
           path: app/build/outputs/apk/debug/app-master.apk
 
       - name: Checkout
-      - uses: actions/checkout@v2
+        uses: actions/checkout@v2
       - name: Build PR APK
         run: ./gradlew assembleDebug && mv app/build/outputs/apk/debug/app-debug.apk app/build/outputs/apk/debug/app-pr.apk
       - name: Upload APK
