@@ -32,6 +32,8 @@ jobs:
         with:
           name: apk
           path: apk
+      - name: Display structure of downloaded files
+        run: ls -R
       - name: Execute Diffuse
         run: ./diffuse diff apk/app-master.apk apk/app-pr.apk > diff_summary.txt
       - name: Upload summary
