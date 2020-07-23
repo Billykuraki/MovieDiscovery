@@ -26,7 +26,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: apks
-          path: app/build/outputs/apk/debug/app-master.apk
+          path: app/build/outputs/apk/debug/app-master-${{ env.DATE }}.apk
 
       - name: Checkout
         uses: actions/checkout@v2
@@ -42,7 +42,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: apks
-          path: app/build/outputs/apk/debug/app-pr.apk
+          path: app/build/outputs/apk/debug/app-pr-${{ env.DATE }}.apk
 
       - name: Download APKs
         uses: actions/download-artifact@v2
