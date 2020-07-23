@@ -7,7 +7,7 @@ on:
 
 env:
   TEST: "test"
-  WORKFLOW_VERSION: ${{ github.event.client_payload.workflow_version }}
+  NAME: ${{ secrets.NAME }}
 
 jobs:
   # Checkout master branch and build the APK
