@@ -1,0 +1,70 @@
+name: Apk Diff Workflow
+
+on:
+  pull_request:
+    branches:
+      - master
+
+env:
+  TEST: "test1234"
+  NAME: ${{ secrets.NAME }}
+
+jobs:
+  # Checkout master branch and build the APK
+  diff-apks:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: print env
+        run: |
+          echo "my test variable is $TEST"
+          echo "my NAME is $NAME"
+
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: master
+
+      - name: Build Master APK
+        run: |
+          ./gradlew assembleDebug
+          mv app/build/outputs/apk/debug/app-debug.apk app/build/outputs/apk/debug/app-master-${{ env.DATE }}.apk
+      - name: Upload APK
+        uses: actions/upload-artifact@v2
+        with:
+          name: apks
+          path: app/build/outputs/apk/debug/app-master-${{ env.DATE }}.apk
+
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: print env
+        run: |
+          echo "my variable test $TEST"
+          echo "my variable workflow $WORKFLOW_VERSION"
+
+      - name: Build PR APK
+        run: |
+          ./gradlew assembleDebug
+          mv app/build/outputs/apk/debug/app-debug.apk app/build/outputs/apk/debug/app-pr-${{ env.DATE }}.apk
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v2
+        with:
+          name: apks
+          path: app/build/outputs/apk/debug/app-pr-${{ env.DATE }}.apk
+
+      - name: Download APKs
+        uses: actions/download-artifact@v2
+        with:
+          name: apks
+          path: apks
+
+      - name: Execute Diffuse
+        run: ./diffuse diff apks/app-master-${{ env.DATE }}.apk apks/app-pr-${{ env.DATE }}.apk > diff_summary.txt
+      - name: Upload summary
+        uses: actions/upload-artifact@v2
+        with:
+          path: diff_summary.txt
