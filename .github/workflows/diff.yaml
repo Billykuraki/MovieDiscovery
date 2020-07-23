@@ -1,12 +1,13 @@
 name: Apk Diff Workflow
 
-env:
-  DATE: "$(date '+%Y-%m-%d')"
-
 on:
   pull_request:
     branches:
       - master
+
+env:
+  TEST: "test"
+  WORKFLOW_VERSION: ${{ github.event.client_payload.workflow_version }}
 
 jobs:
   # Checkout master branch and build the APK
@@ -20,6 +21,8 @@ jobs:
 
       - name: Build Master APK
         run: |
+          excho $TEST
+          echo $WORKFLOW_VERSION
           ./gradlew assembleDebug
           mv app/build/outputs/apk/debug/app-debug.apk app/build/outputs/apk/debug/app-master-${{ env.DATE }}.apk
       - name: Upload APK
@@ -35,6 +38,8 @@ jobs:
 
       - name: Build PR APK
         run: |
+          excho $TEST
+          echo $WORKFLOW_VERSION
           ./gradlew assembleDebug
           mv app/build/outputs/apk/debug/app-debug.apk app/build/outputs/apk/debug/app-pr-${{ env.DATE }}.apk
 
