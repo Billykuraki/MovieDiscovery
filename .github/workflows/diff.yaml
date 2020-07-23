@@ -1,9 +1,9 @@
 name: Apk Diff Workflow
 
 on:
-  push:
+  pull_request:
     branches:
-      - develop
+      - master
 
 jobs:
   # Checkout master branch and build the APK
