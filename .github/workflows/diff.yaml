@@ -14,6 +14,12 @@ jobs:
   diff-apks:
     runs-on: ubuntu-latest
     steps:
+
+      - name: print env
+        run: |
+          echo "my variable test $TEST"
+          echo "my variable workflow $WORKFLOW_VERSION"
+
       - name: Checkout
         uses: actions/checkout@v2
         with:
@@ -21,8 +27,6 @@ jobs:
 
       - name: Build Master APK
         run: |
-          echo "my variabel test $TEST"
-          echo "my variable workflow $WORKFLOW_VERSION"
           ./gradlew assembleDebug
           mv app/build/outputs/apk/debug/app-debug.apk app/build/outputs/apk/debug/app-master-${{ env.DATE }}.apk
       - name: Upload APK
@@ -36,10 +40,13 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.sha }}
 
+      - name: print env
+        run: |
+          echo "my variable test $TEST"
+          echo "my variable workflow $WORKFLOW_VERSION"
+
       - name: Build PR APK
         run: |
-          echo $TEST
-          echo $WORKFLOW_VERSION
           ./gradlew assembleDebug
           mv app/build/outputs/apk/debug/app-debug.apk app/build/outputs/apk/debug/app-pr-${{ env.DATE }}.apk
 
