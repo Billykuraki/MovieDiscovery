@@ -1,7 +1,7 @@
 name: Apk Diff Workflow
 
 env:
-  DATE: $(date '+%Y-%m-%d')
+  DATE: "$(date '+%Y-%m-%d')"
 
 on:
   pull_request:
