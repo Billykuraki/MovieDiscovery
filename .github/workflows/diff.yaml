@@ -6,7 +6,7 @@ on:
       - master
 
 env:
-  TEST: "test"
+  TEST: "test1234"
   NAME: ${{ secrets.NAME }}
 
 jobs:
@@ -17,8 +17,8 @@ jobs:
 
       - name: print env
         run: |
-          echo "my variable test $TEST"
-          echo "my variable workflow $WORKFLOW_VERSION"
+          echo "my test variable is $TEST"
+          echo "my NAME is $NAME"
 
       - name: Checkout
         uses: actions/checkout@v2
