@@ -1,10 +1,13 @@
-name: Apk Diff
+name: Apk Diff Workflow
 
-on: [pull_request]
+on:
+  pull_request:
+    branches:
+      - develop
 
 jobs:
   # Checkout master branch and build the APK
-  build-master:
+  diff-apks:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -46,5 +49,4 @@ jobs:
       - name: Upload summary
         uses: actions/upload-artifact@v2
         with:
-          name: summary
           path: diff_summary.txt
